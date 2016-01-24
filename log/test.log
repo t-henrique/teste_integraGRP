@@ -881,3 +881,321 @@ LINE 1: ...("valor", "created_at", "conta_id", "id") VALUES ('MyString'...
 : INSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)
   [1m[35m (0.1ms)[0m  ROLLBACK
   [1m[36m (3.8ms)[0m  [1mALTER TABLE "correntista" ENABLE TRIGGER ALL;ALTER TABLE "conta" ENABLE TRIGGER ALL;ALTER TABLE "deposito" ENABLE TRIGGER ALL;ALTER TABLE "saque" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL[0m
+  [1m[36m (217.8ms)[0m  [1mDROP DATABASE IF EXISTS "teste_integragrp_last"[0m
+  [1m[35m (606.6ms)[0m  CREATE DATABASE "teste_integragrp_last" ENCODING = 'utf8'
+  [1m[36mSQL (0.3ms)[0m  [1mCREATE EXTENSION IF NOT EXISTS "plpgsql"[0m
+  [1m[35m (72.9ms)[0m  CREATE TABLE "conta" ("id" serial primary key, "correntista_id" integer, "flag_ativo" character varying(1) DEFAULT 'S', "created_at" timestamp, "updated_at" timestamp, "saldo" decimal(20,2)) 
+  [1m[36m (56.7ms)[0m  [1mCREATE TABLE "correntista" ("id" serial primary key, "cpf" character varying(11), "nome" character varying(50), "datanascimento" date, "endereco" character varying(255), "numero" integer, "bairro" character varying(50), "cidade" character varying(50), "estado" character varying(2), "created_at" timestamp, "users_id" integer) [0m
+  [1m[35m (55.2ms)[0m  CREATE  INDEX  "fki_users_id" ON "correntista" USING btree ("users_id")
+  [1m[36m (57.1ms)[0m  [1mCREATE TABLE "deposito" ("id" serial primary key, "valor" decimal(20,2), "created_at" timestamp, "conta_destino_id" character varying(6) NOT NULL, "conta_origem_id" character varying(6), "taxa" decimal(10,2)) [0m
+  [1m[35m (57.2ms)[0m  CREATE TABLE "saque" ("id" serial primary key, "valor" decimal(20,2), "created_at" timestamp, "conta_id" character varying(6) NOT NULL) 
+  [1m[36m (86.1ms)[0m  [1mCREATE TABLE "users" ("id" serial primary key, "email" character varying DEFAULT '' NOT NULL, "encrypted_password" character varying DEFAULT '' NOT NULL, "reset_password_token" character varying, "reset_password_sent_at" timestamp, "remember_created_at" timestamp, "sign_in_count" integer DEFAULT 0 NOT NULL, "current_sign_in_at" timestamp, "last_sign_in_at" timestamp, "current_sign_in_ip" inet, "last_sign_in_ip" inet, "created_at" timestamp NOT NULL, "updated_at" timestamp NOT NULL) [0m
+  [1m[35m (55.3ms)[0m  CREATE UNIQUE INDEX  "index_users_on_email" ON "users" USING btree ("email")
+  [1m[36m (55.8ms)[0m  [1mCREATE UNIQUE INDEX  "index_users_on_reset_password_token" ON "users" USING btree ("reset_password_token")[0m
+  [1m[35m (7.6ms)[0m  ALTER TABLE "conta" ADD CONSTRAINT "conta_correntista_id_fkey"
+FOREIGN KEY ("correntista_id")
+  REFERENCES "correntista" ("id")
+
+  [1m[36m (7.9ms)[0m  [1mALTER TABLE "correntista" ADD CONSTRAINT "users_id"
+FOREIGN KEY ("users_id")
+  REFERENCES "users" ("id")
+[0m
+  [1m[35m (46.8ms)[0m  CREATE TABLE "schema_migrations" ("version" character varying NOT NULL) 
+  [1m[36m (47.4ms)[0m  [1mCREATE UNIQUE INDEX  "unique_schema_migrations" ON "schema_migrations"  ("version")[0m
+  [1m[35m (0.4ms)[0m  SELECT version FROM "schema_migrations"
+  [1m[36m (7.2ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20160124193019')[0m
+  [1m[35m (8.2ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20160124193016')
+  [1m[36m (8.1ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20160124193013')[0m
+  [1m[35m (8.1ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20160124193014')
+  [1m[36m (8.2ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20160124193015')[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (14.1ms)[0m  ALTER TABLE "deposito" DISABLE TRIGGER ALL;ALTER TABLE "saque" DISABLE TRIGGER ALL;ALTER TABLE "conta" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "correntista" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "saque"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)[0m
+PG::InvalidTextRepresentation: ERROR:  invalid input syntax for type numeric: "MyString"
+LINE 1: ...("valor", "created_at", "conta_id", "id") VALUES ('MyString'...
+                                                             ^
+: INSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36m (13.7ms)[0m  [1mALTER TABLE "deposito" ENABLE TRIGGER ALL;ALTER TABLE "saque" ENABLE TRIGGER ALL;ALTER TABLE "conta" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "correntista" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL[0m
+  [1m[35m (7.2ms)[0m  ALTER TABLE "deposito" DISABLE TRIGGER ALL;ALTER TABLE "saque" DISABLE TRIGGER ALL;ALTER TABLE "conta" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "correntista" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "saque"
+  [1m[36mFixture Insert (0.4ms)[0m  [1mINSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)[0m
+PG::InvalidTextRepresentation: ERROR:  invalid input syntax for type numeric: "MyString"
+LINE 1: ...("valor", "created_at", "conta_id", "id") VALUES ('MyString'...
+                                                             ^
+: INSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36m (9.5ms)[0m  [1mALTER TABLE "deposito" ENABLE TRIGGER ALL;ALTER TABLE "saque" ENABLE TRIGGER ALL;ALTER TABLE "conta" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "correntista" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL[0m
+  [1m[35m (7.4ms)[0m  ALTER TABLE "deposito" DISABLE TRIGGER ALL;ALTER TABLE "saque" DISABLE TRIGGER ALL;ALTER TABLE "conta" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "correntista" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "saque"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)[0m
+PG::InvalidTextRepresentation: ERROR:  invalid input syntax for type numeric: "MyString"
+LINE 1: ...("valor", "created_at", "conta_id", "id") VALUES ('MyString'...
+                                                             ^
+: INSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (10.8ms)[0m  [1mALTER TABLE "deposito" ENABLE TRIGGER ALL;ALTER TABLE "saque" ENABLE TRIGGER ALL;ALTER TABLE "conta" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "correntista" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL[0m
+  [1m[35m (7.1ms)[0m  ALTER TABLE "deposito" DISABLE TRIGGER ALL;ALTER TABLE "saque" DISABLE TRIGGER ALL;ALTER TABLE "conta" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "correntista" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "saque"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)[0m
+PG::InvalidTextRepresentation: ERROR:  invalid input syntax for type numeric: "MyString"
+LINE 1: ...("valor", "created_at", "conta_id", "id") VALUES ('MyString'...
+                                                             ^
+: INSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36m (9.5ms)[0m  [1mALTER TABLE "deposito" ENABLE TRIGGER ALL;ALTER TABLE "saque" ENABLE TRIGGER ALL;ALTER TABLE "conta" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "correntista" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL[0m
+  [1m[35m (7.2ms)[0m  ALTER TABLE "deposito" DISABLE TRIGGER ALL;ALTER TABLE "saque" DISABLE TRIGGER ALL;ALTER TABLE "conta" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "correntista" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "saque"
+  [1m[36mFixture Insert (0.4ms)[0m  [1mINSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)[0m
+PG::InvalidTextRepresentation: ERROR:  invalid input syntax for type numeric: "MyString"
+LINE 1: ...("valor", "created_at", "conta_id", "id") VALUES ('MyString'...
+                                                             ^
+: INSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (10.0ms)[0m  [1mALTER TABLE "deposito" ENABLE TRIGGER ALL;ALTER TABLE "saque" ENABLE TRIGGER ALL;ALTER TABLE "conta" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "correntista" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL[0m
+  [1m[35m (7.2ms)[0m  ALTER TABLE "deposito" DISABLE TRIGGER ALL;ALTER TABLE "saque" DISABLE TRIGGER ALL;ALTER TABLE "conta" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "correntista" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "saque"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)[0m
+PG::InvalidTextRepresentation: ERROR:  invalid input syntax for type numeric: "MyString"
+LINE 1: ...("valor", "created_at", "conta_id", "id") VALUES ('MyString'...
+                                                             ^
+: INSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (10.2ms)[0m  [1mALTER TABLE "deposito" ENABLE TRIGGER ALL;ALTER TABLE "saque" ENABLE TRIGGER ALL;ALTER TABLE "conta" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "correntista" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL[0m
+  [1m[35m (7.2ms)[0m  ALTER TABLE "deposito" DISABLE TRIGGER ALL;ALTER TABLE "saque" DISABLE TRIGGER ALL;ALTER TABLE "conta" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "correntista" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "saque"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)[0m
+PG::InvalidTextRepresentation: ERROR:  invalid input syntax for type numeric: "MyString"
+LINE 1: ...("valor", "created_at", "conta_id", "id") VALUES ('MyString'...
+                                                             ^
+: INSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (10.7ms)[0m  [1mALTER TABLE "deposito" ENABLE TRIGGER ALL;ALTER TABLE "saque" ENABLE TRIGGER ALL;ALTER TABLE "conta" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "correntista" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL[0m
+  [1m[35m (6.9ms)[0m  ALTER TABLE "deposito" DISABLE TRIGGER ALL;ALTER TABLE "saque" DISABLE TRIGGER ALL;ALTER TABLE "conta" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "correntista" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "saque"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)[0m
+PG::InvalidTextRepresentation: ERROR:  invalid input syntax for type numeric: "MyString"
+LINE 1: ...("valor", "created_at", "conta_id", "id") VALUES ('MyString'...
+                                                             ^
+: INSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (10.5ms)[0m  [1mALTER TABLE "deposito" ENABLE TRIGGER ALL;ALTER TABLE "saque" ENABLE TRIGGER ALL;ALTER TABLE "conta" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "correntista" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL[0m
+  [1m[35m (7.4ms)[0m  ALTER TABLE "deposito" DISABLE TRIGGER ALL;ALTER TABLE "saque" DISABLE TRIGGER ALL;ALTER TABLE "conta" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "correntista" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "saque"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)[0m
+PG::InvalidTextRepresentation: ERROR:  invalid input syntax for type numeric: "MyString"
+LINE 1: ...("valor", "created_at", "conta_id", "id") VALUES ('MyString'...
+                                                             ^
+: INSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (2.7ms)[0m  [1mALTER TABLE "deposito" ENABLE TRIGGER ALL;ALTER TABLE "saque" ENABLE TRIGGER ALL;ALTER TABLE "conta" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "correntista" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL[0m
+  [1m[35m (7.3ms)[0m  ALTER TABLE "deposito" DISABLE TRIGGER ALL;ALTER TABLE "saque" DISABLE TRIGGER ALL;ALTER TABLE "conta" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "correntista" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "saque"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)[0m
+PG::InvalidTextRepresentation: ERROR:  invalid input syntax for type numeric: "MyString"
+LINE 1: ...("valor", "created_at", "conta_id", "id") VALUES ('MyString'...
+                                                             ^
+: INSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36m (2.1ms)[0m  [1mALTER TABLE "deposito" ENABLE TRIGGER ALL;ALTER TABLE "saque" ENABLE TRIGGER ALL;ALTER TABLE "conta" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "correntista" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL[0m
+  [1m[35m (7.5ms)[0m  ALTER TABLE "deposito" DISABLE TRIGGER ALL;ALTER TABLE "saque" DISABLE TRIGGER ALL;ALTER TABLE "conta" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "correntista" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "saque"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)[0m
+PG::InvalidTextRepresentation: ERROR:  invalid input syntax for type numeric: "MyString"
+LINE 1: ...("valor", "created_at", "conta_id", "id") VALUES ('MyString'...
+                                                             ^
+: INSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (2.4ms)[0m  [1mALTER TABLE "deposito" ENABLE TRIGGER ALL;ALTER TABLE "saque" ENABLE TRIGGER ALL;ALTER TABLE "conta" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "correntista" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL[0m
+  [1m[35m (7.4ms)[0m  ALTER TABLE "deposito" DISABLE TRIGGER ALL;ALTER TABLE "saque" DISABLE TRIGGER ALL;ALTER TABLE "conta" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "correntista" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "saque"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)[0m
+PG::InvalidTextRepresentation: ERROR:  invalid input syntax for type numeric: "MyString"
+LINE 1: ...("valor", "created_at", "conta_id", "id") VALUES ('MyString'...
+                                                             ^
+: INSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (2.9ms)[0m  [1mALTER TABLE "deposito" ENABLE TRIGGER ALL;ALTER TABLE "saque" ENABLE TRIGGER ALL;ALTER TABLE "conta" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "correntista" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL[0m
+  [1m[35m (7.5ms)[0m  ALTER TABLE "deposito" DISABLE TRIGGER ALL;ALTER TABLE "saque" DISABLE TRIGGER ALL;ALTER TABLE "conta" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "correntista" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "saque"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)[0m
+PG::InvalidTextRepresentation: ERROR:  invalid input syntax for type numeric: "MyString"
+LINE 1: ...("valor", "created_at", "conta_id", "id") VALUES ('MyString'...
+                                                             ^
+: INSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36m (2.2ms)[0m  [1mALTER TABLE "deposito" ENABLE TRIGGER ALL;ALTER TABLE "saque" ENABLE TRIGGER ALL;ALTER TABLE "conta" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "correntista" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL[0m
+  [1m[35m (7.2ms)[0m  ALTER TABLE "deposito" DISABLE TRIGGER ALL;ALTER TABLE "saque" DISABLE TRIGGER ALL;ALTER TABLE "conta" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "correntista" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "saque"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)[0m
+PG::InvalidTextRepresentation: ERROR:  invalid input syntax for type numeric: "MyString"
+LINE 1: ...("valor", "created_at", "conta_id", "id") VALUES ('MyString'...
+                                                             ^
+: INSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (2.6ms)[0m  [1mALTER TABLE "deposito" ENABLE TRIGGER ALL;ALTER TABLE "saque" ENABLE TRIGGER ALL;ALTER TABLE "conta" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "correntista" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL[0m
+  [1m[35m (5.9ms)[0m  ALTER TABLE "deposito" DISABLE TRIGGER ALL;ALTER TABLE "saque" DISABLE TRIGGER ALL;ALTER TABLE "conta" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "correntista" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "saque"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)[0m
+PG::InvalidTextRepresentation: ERROR:  invalid input syntax for type numeric: "MyString"
+LINE 1: ...("valor", "created_at", "conta_id", "id") VALUES ('MyString'...
+                                                             ^
+: INSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (2.6ms)[0m  [1mALTER TABLE "deposito" ENABLE TRIGGER ALL;ALTER TABLE "saque" ENABLE TRIGGER ALL;ALTER TABLE "conta" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "correntista" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL[0m
+  [1m[35m (6.9ms)[0m  ALTER TABLE "deposito" DISABLE TRIGGER ALL;ALTER TABLE "saque" DISABLE TRIGGER ALL;ALTER TABLE "conta" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "correntista" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "saque"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)[0m
+PG::InvalidTextRepresentation: ERROR:  invalid input syntax for type numeric: "MyString"
+LINE 1: ...("valor", "created_at", "conta_id", "id") VALUES ('MyString'...
+                                                             ^
+: INSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (3.0ms)[0m  [1mALTER TABLE "deposito" ENABLE TRIGGER ALL;ALTER TABLE "saque" ENABLE TRIGGER ALL;ALTER TABLE "conta" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "correntista" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL[0m
+  [1m[35m (7.6ms)[0m  ALTER TABLE "deposito" DISABLE TRIGGER ALL;ALTER TABLE "saque" DISABLE TRIGGER ALL;ALTER TABLE "conta" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "correntista" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "saque"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)[0m
+PG::InvalidTextRepresentation: ERROR:  invalid input syntax for type numeric: "MyString"
+LINE 1: ...("valor", "created_at", "conta_id", "id") VALUES ('MyString'...
+                                                             ^
+: INSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (2.6ms)[0m  [1mALTER TABLE "deposito" ENABLE TRIGGER ALL;ALTER TABLE "saque" ENABLE TRIGGER ALL;ALTER TABLE "conta" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "correntista" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL[0m
+  [1m[35m (7.4ms)[0m  ALTER TABLE "deposito" DISABLE TRIGGER ALL;ALTER TABLE "saque" DISABLE TRIGGER ALL;ALTER TABLE "conta" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "correntista" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "saque"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)[0m
+PG::InvalidTextRepresentation: ERROR:  invalid input syntax for type numeric: "MyString"
+LINE 1: ...("valor", "created_at", "conta_id", "id") VALUES ('MyString'...
+                                                             ^
+: INSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)
+  [1m[35m (0.2ms)[0m  ROLLBACK
+  [1m[36m (5.1ms)[0m  [1mALTER TABLE "deposito" ENABLE TRIGGER ALL;ALTER TABLE "saque" ENABLE TRIGGER ALL;ALTER TABLE "conta" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "correntista" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL[0m
+  [1m[35m (7.2ms)[0m  ALTER TABLE "deposito" DISABLE TRIGGER ALL;ALTER TABLE "saque" DISABLE TRIGGER ALL;ALTER TABLE "conta" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "correntista" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL
+  [1m[36m (7.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "saque"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)[0m
+PG::InvalidTextRepresentation: ERROR:  invalid input syntax for type numeric: "MyString"
+LINE 1: ...("valor", "created_at", "conta_id", "id") VALUES ('MyString'...
+                                                             ^
+: INSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (2.3ms)[0m  [1mALTER TABLE "deposito" ENABLE TRIGGER ALL;ALTER TABLE "saque" ENABLE TRIGGER ALL;ALTER TABLE "conta" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "correntista" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL[0m
+  [1m[35m (7.2ms)[0m  ALTER TABLE "deposito" DISABLE TRIGGER ALL;ALTER TABLE "saque" DISABLE TRIGGER ALL;ALTER TABLE "conta" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "correntista" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "saque"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)[0m
+PG::InvalidTextRepresentation: ERROR:  invalid input syntax for type numeric: "MyString"
+LINE 1: ...("valor", "created_at", "conta_id", "id") VALUES ('MyString'...
+                                                             ^
+: INSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (10.2ms)[0m  [1mALTER TABLE "deposito" ENABLE TRIGGER ALL;ALTER TABLE "saque" ENABLE TRIGGER ALL;ALTER TABLE "conta" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "correntista" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL[0m
+  [1m[35m (7.4ms)[0m  ALTER TABLE "deposito" DISABLE TRIGGER ALL;ALTER TABLE "saque" DISABLE TRIGGER ALL;ALTER TABLE "conta" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "correntista" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "saque"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)[0m
+PG::InvalidTextRepresentation: ERROR:  invalid input syntax for type numeric: "MyString"
+LINE 1: ...("valor", "created_at", "conta_id", "id") VALUES ('MyString'...
+                                                             ^
+: INSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (2.8ms)[0m  [1mALTER TABLE "deposito" ENABLE TRIGGER ALL;ALTER TABLE "saque" ENABLE TRIGGER ALL;ALTER TABLE "conta" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "correntista" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL[0m
+  [1m[35m (7.6ms)[0m  ALTER TABLE "deposito" DISABLE TRIGGER ALL;ALTER TABLE "saque" DISABLE TRIGGER ALL;ALTER TABLE "conta" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "correntista" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "saque"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)[0m
+PG::InvalidTextRepresentation: ERROR:  invalid input syntax for type numeric: "MyString"
+LINE 1: ...("valor", "created_at", "conta_id", "id") VALUES ('MyString'...
+                                                             ^
+: INSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (3.2ms)[0m  [1mALTER TABLE "deposito" ENABLE TRIGGER ALL;ALTER TABLE "saque" ENABLE TRIGGER ALL;ALTER TABLE "conta" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "correntista" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL[0m
+  [1m[35m (6.5ms)[0m  ALTER TABLE "deposito" DISABLE TRIGGER ALL;ALTER TABLE "saque" DISABLE TRIGGER ALL;ALTER TABLE "conta" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "correntista" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "saque"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)[0m
+PG::InvalidTextRepresentation: ERROR:  invalid input syntax for type numeric: "MyString"
+LINE 1: ...("valor", "created_at", "conta_id", "id") VALUES ('MyString'...
+                                                             ^
+: INSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (3.0ms)[0m  [1mALTER TABLE "deposito" ENABLE TRIGGER ALL;ALTER TABLE "saque" ENABLE TRIGGER ALL;ALTER TABLE "conta" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "correntista" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL[0m
+  [1m[35m (7.6ms)[0m  ALTER TABLE "deposito" DISABLE TRIGGER ALL;ALTER TABLE "saque" DISABLE TRIGGER ALL;ALTER TABLE "conta" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "correntista" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "saque"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)[0m
+PG::InvalidTextRepresentation: ERROR:  invalid input syntax for type numeric: "MyString"
+LINE 1: ...("valor", "created_at", "conta_id", "id") VALUES ('MyString'...
+                                                             ^
+: INSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (3.3ms)[0m  [1mALTER TABLE "deposito" ENABLE TRIGGER ALL;ALTER TABLE "saque" ENABLE TRIGGER ALL;ALTER TABLE "conta" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "correntista" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL[0m
+  [1m[35m (7.6ms)[0m  ALTER TABLE "deposito" DISABLE TRIGGER ALL;ALTER TABLE "saque" DISABLE TRIGGER ALL;ALTER TABLE "conta" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "correntista" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "saque"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)[0m
+PG::InvalidTextRepresentation: ERROR:  invalid input syntax for type numeric: "MyString"
+LINE 1: ...("valor", "created_at", "conta_id", "id") VALUES ('MyString'...
+                                                             ^
+: INSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (3.2ms)[0m  [1mALTER TABLE "deposito" ENABLE TRIGGER ALL;ALTER TABLE "saque" ENABLE TRIGGER ALL;ALTER TABLE "conta" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "correntista" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL[0m
+  [1m[35m (7.5ms)[0m  ALTER TABLE "deposito" DISABLE TRIGGER ALL;ALTER TABLE "saque" DISABLE TRIGGER ALL;ALTER TABLE "conta" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "correntista" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "saque"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)[0m
+PG::InvalidTextRepresentation: ERROR:  invalid input syntax for type numeric: "MyString"
+LINE 1: ...("valor", "created_at", "conta_id", "id") VALUES ('MyString'...
+                                                             ^
+: INSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (3.6ms)[0m  [1mALTER TABLE "deposito" ENABLE TRIGGER ALL;ALTER TABLE "saque" ENABLE TRIGGER ALL;ALTER TABLE "conta" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "correntista" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL[0m
+  [1m[35m (7.7ms)[0m  ALTER TABLE "deposito" DISABLE TRIGGER ALL;ALTER TABLE "saque" DISABLE TRIGGER ALL;ALTER TABLE "conta" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "correntista" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "saque"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)[0m
+PG::InvalidTextRepresentation: ERROR:  invalid input syntax for type numeric: "MyString"
+LINE 1: ...("valor", "created_at", "conta_id", "id") VALUES ('MyString'...
+                                                             ^
+: INSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (3.2ms)[0m  [1mALTER TABLE "deposito" ENABLE TRIGGER ALL;ALTER TABLE "saque" ENABLE TRIGGER ALL;ALTER TABLE "conta" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "correntista" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL[0m
+  [1m[35m (7.3ms)[0m  ALTER TABLE "deposito" DISABLE TRIGGER ALL;ALTER TABLE "saque" DISABLE TRIGGER ALL;ALTER TABLE "conta" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "correntista" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL
+  [1m[36m (0.2ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "saque"
+  [1m[36mFixture Insert (0.4ms)[0m  [1mINSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)[0m
+PG::InvalidTextRepresentation: ERROR:  invalid input syntax for type numeric: "MyString"
+LINE 1: ...("valor", "created_at", "conta_id", "id") VALUES ('MyString'...
+                                                             ^
+: INSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (2.7ms)[0m  [1mALTER TABLE "deposito" ENABLE TRIGGER ALL;ALTER TABLE "saque" ENABLE TRIGGER ALL;ALTER TABLE "conta" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "correntista" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL[0m
+  [1m[35m (7.6ms)[0m  ALTER TABLE "deposito" DISABLE TRIGGER ALL;ALTER TABLE "saque" DISABLE TRIGGER ALL;ALTER TABLE "conta" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "correntista" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL
+  [1m[36m (0.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "saque"
+  [1m[36mFixture Insert (0.3ms)[0m  [1mINSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)[0m
+PG::InvalidTextRepresentation: ERROR:  invalid input syntax for type numeric: "MyString"
+LINE 1: ...("valor", "created_at", "conta_id", "id") VALUES ('MyString'...
+                                                             ^
+: INSERT INTO "saque" ("valor", "created_at", "conta_id", "id") VALUES ('MyString', 'MyString', 'MyString', 980190962)
+  [1m[35m (0.1ms)[0m  ROLLBACK
+  [1m[36m (3.1ms)[0m  [1mALTER TABLE "deposito" ENABLE TRIGGER ALL;ALTER TABLE "saque" ENABLE TRIGGER ALL;ALTER TABLE "conta" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "correntista" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL[0m
