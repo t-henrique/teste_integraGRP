@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 20160121162723) do
     t.string   "flag_ativo",     limit: 1,                          default: "S"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.decimal  "saldo",                    precision: 10, scale: 2
+    t.decimal  "saldo",                    precision: 20, scale: 2
   end
 
   create_table "correntista", force: :cascade do |t|
@@ -34,10 +34,13 @@ ActiveRecord::Schema.define(version: 20160121162723) do
     t.string   "cidade",         limit: 50
     t.string   "estado",         limit: 2
     t.datetime "created_at"
+    t.integer  "users_id"
   end
 
+  add_index "correntista", ["users_id"], name: "fki_users_id", using: :btree
+
   create_table "deposito", force: :cascade do |t|
-    t.decimal  "valor",                      precision: 10, scale: 2
+    t.decimal  "valor",                      precision: 20, scale: 2
     t.datetime "created_at"
     t.string   "conta_destino_id", limit: 6,                          null: false
     t.string   "conta_origem_id",  limit: 6
@@ -45,7 +48,7 @@ ActiveRecord::Schema.define(version: 20160121162723) do
   end
 
   create_table "saque", force: :cascade do |t|
-    t.decimal  "valor",                precision: 10, scale: 2
+    t.decimal  "valor",                precision: 20, scale: 2
     t.datetime "created_at"
     t.string   "conta_id",   limit: 6,                          null: false
   end
@@ -69,6 +72,7 @@ ActiveRecord::Schema.define(version: 20160121162723) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   add_foreign_key "conta", "correntista", name: "conta_correntista_id_fkey"
+  add_foreign_key "correntista", "users", column: "users_id", name: "users_id"
   add_foreign_key "deposito", "conta", column: "conta_destino_id", name: "deposito_conta_destino_id_fkey"
   add_foreign_key "deposito", "conta", column: "conta_origem_id", name: "deposito_conta_origem_id_fkey"
   add_foreign_key "saque", "conta", name: "saques_conta_origem_id_fkey"

@@ -12,7 +12,7 @@ default: &default
 development:
   adapter: postgresql
   encoding: unicode
-  database: desafio_integragrp
+  database: teste_integragrp
   pool: 5
   username: postgres
   password: postgres
@@ -24,4 +24,4 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: desafio_integragrp
+  database: teste_integragrp
