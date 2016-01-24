@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160121162723) do
+ActiveRecord::Schema.define(version: 20160124193019) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -73,7 +73,4 @@ ActiveRecord::Schema.define(version: 20160121162723) do
 
   add_foreign_key "conta", "correntista", name: "conta_correntista_id_fkey"
   add_foreign_key "correntista", "users", column: "users_id", name: "users_id"
-  add_foreign_key "deposito", "conta", column: "conta_destino_id", name: "deposito_conta_destino_id_fkey"
-  add_foreign_key "deposito", "conta", column: "conta_origem_id", name: "deposito_conta_origem_id_fkey"
-  add_foreign_key "saque", "conta", name: "saques_conta_origem_id_fkey"
 end
