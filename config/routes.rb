@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  resources :cruzeiros
-  resources :cruzeiros
   root 'info_page#home'
   get 'info_page/home'
   get 'info_page/about'
