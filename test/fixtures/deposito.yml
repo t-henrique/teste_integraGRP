@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id: MyString
+  valor: 9.99
+  conta_destino_id: 
+  conta_origem_id: 
+
+two:
+  id: MyString
+  valor: 9.99
+  conta_destino_id: 
+  conta_origem_id: 

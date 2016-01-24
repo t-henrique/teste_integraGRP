@@ -1,0 +1,17 @@
+<%= link_to correntista_path(current_user.correntista_id), class:"btn btn-default" do  %><i class="fa fa-step-backward "></i> Voltar <% end %>
+<div class="row">
+  <div class="col-md-6 col-sm-12 col-xs-12">
+    <div class="panel panel-back noti-box">
+      <h2>Editar Cadastro Correntista</h2>
+      <%= render 'form' %>
+    </div>
+  </div>
+  <div class="col-md-6 col-sm-12 col-xs-12">
+    <div class="panel panel-back noti-box">
+      <h3>Ações para seu Cadastro:</h3>
+      <%= link_to @correntista, class:"btn btn-success" do %><i class="fa fa-desktop"></i> Visualizar Cadastro <% end %>
+      <%#= link_to 'Show', @correntista %>
+      <% link_to 'Back', correntista_index_path %>
+    </div>
+  </div>
+</div>

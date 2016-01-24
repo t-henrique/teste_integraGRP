@@ -1,0 +1,28 @@
+<%= form_for([:conta, @saque]) do |f| %>
+  <% if @saque.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@saque.errors.count, "error") %> prohibited this saque from being saved:</h2>
+
+      <ul>
+      <% @saque.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :valor %><br>
+    <%= f.text_field :valorProvisorio, maxlength: 18  %>
+  </div>
+
+
+  <div class="field">
+    <%= f.label :conta_id %><br>
+    <%= f.text_field :conta_id, :readonly => true %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit 'Sacar ',  data: { confirm: 'Está certo dos valores?' } %>
+  </div>
+<% end %>

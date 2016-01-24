@@ -1,0 +1,58 @@
+<div class="row">
+  <div class="col-md-6 col-sm-12 col-xs-12">
+    <div class="panel panel-back noti-box">
+      <span class="icon-box bg-color-blue">
+        <i class="fa fa-star-half"></i>
+      </span>
+      <div class="text-box">
+        <p class="main-text">Seja bem vindo </p>
+        <p class="text-muted">Este é o Sistema de Gestão de Caixa do Banco.</p>
+        <p class="text-muted">Este sistema foi desenvolvido em Ruby on Rails.</p>
+        <p class="text-muted"><i class="fa fa-edit"></i> Versão Ruby utilizada foi: </p>
+        <p class="text-muted text-center">"ruby 2.2.3p173 (2015-08-18 revision 51636) [x86_64-linux]" </p>
+        <p class="text-muted"><i class="fa fa-edit"></i> Versão Rails utilizada foi: </p>
+        <p class="text-muted text-center">"Rails 4.2.4" </p>
+        <hr>
+        <p class="text-muted">
+          <span class="text-muted color-bottom-txt">
+            Por favor cadastre-se ou logue no sistma para utilizá-lo.
+          </span>
+        </p>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-md-6 col-sm-12 col-xs-12 ">
+    <div class="panel ">
+      <div class="main-temp-back">
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-xs-6"> <i class="fa fa-user fa-3x"></i> Cadastre-se </div>
+            <div class="col-xs-6">
+              <div class="text-temp">
+                <%= link_to "Cadastrar", new_user_registration_path, class: "btn btn-primary" %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 col-sm-12 col-xs-12 ">
+    <div class="panel">
+      <div class="main-temp-back ">
+        <div class="panel-body bg-color-red">
+            <div class="row">
+            <div class="col-xs-6"> <i class="fa fa-user fa-3x"></i> Log In </div>
+            <div class="col-xs-6">
+              <div class="text-temp">
+                <%= link_to "Entrar", new_user_session_path, class: "btn btn-success"  %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

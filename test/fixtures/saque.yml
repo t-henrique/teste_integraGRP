@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  valor: MyString
+  created_at: MyString
+  conta_id: MyString
+
+two:
+  valor: MyString
+  created_at: MyString
+  conta_id: MyString

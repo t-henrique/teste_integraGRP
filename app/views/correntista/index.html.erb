@@ -1,0 +1,43 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Correntista</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Correntista</th>
+      <th>Cpf</th>
+      <th>Nome</th>
+      <th>Datanascimento</th>
+      <th>Endereco</th>
+      <th>Numero</th>
+      <th>Bairro</th>
+      <th>Cidade</th>
+      <th>Estado</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @correntista.each do |correntista| %>
+      <tr>
+        <td><%= correntista.id %></td>
+        <td><%= correntista.cpf %></td>
+        <td><%= correntista.nome %></td>
+        <td><%= correntista.datanascimento %></td>
+        <td><%= correntista.endereco %></td>
+        <td><%= correntista.numero %></td>
+        <td><%= correntista.bairro %></td>
+        <td><%= correntista.cidade %></td>
+        <td><%= correntista.estado %></td>
+        <td><%= link_to 'Show', correntista %></td>
+        <td><%= link_to 'Edit', edit_correntista_path(correntista) %></td>
+        <td><%= link_to 'Destroy', correntista, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Correntista', new_correntista_path %>

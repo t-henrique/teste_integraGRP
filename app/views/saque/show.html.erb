@@ -1,0 +1,24 @@
+<h2>Comprovante de Saque</h2>
+<p id="notice"><%= notice %></p>
+<p>
+  <strong>Idenfiticador:</strong>
+  <%=@saque.id %>
+</p>
+<p>
+  <strong>Valor:</strong>
+  <%= @saque.valor %>
+</p>
+
+<p>
+  <strong>Data de criação:</strong>
+  <%= @saque.created_at.strftime("%m/%d/%Y - %H:%M:%S") %>
+</p>
+
+<p>
+  <strong>Conta:</strong>
+  <%= @saque.conta_id %>
+</p>
+
+<%#= link_to 'Edit', edit_saque_path(@saque) %>
+<%#= link_to 'Back', conta_index_path(@saque.conta_id) %>
+<%= link_to conta_index_path, class:"btn btn-default" do  %><i class="fa fa-step-backward "></i> Voltar <% end %>

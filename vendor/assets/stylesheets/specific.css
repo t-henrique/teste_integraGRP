@@ -1,0 +1,30 @@
+.divLoginLogout{
+  color: white;
+  padding: 15px 50px 5px 50px;
+  float: right;
+  font-size: 16px;
+}
+
+
+a.fill-div {
+  text-align: center;
+  height: 100%;
+  width: 100%;
+  text-decoration: none;
+}
+
+#my-Div{
+  text-align: center;
+  display: block;
+  height: 100%;
+  width: 100%;
+  text-decoration: none;
+}
+.noDot {
+list-style-type:none
+}
+
+.customHW{
+    /* background-color: #F8F8F8; */
+    width: 15em;
+}

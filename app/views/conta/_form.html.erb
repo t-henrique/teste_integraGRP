@@ -1,0 +1,38 @@
+<%#= form_for(@conta) do |f| %>
+<%= form_for([:correntista, @conta]) do |f| %>
+  <% if @conta.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@conta.errors.count, "error") %> prohibited this conta from being saved:</h2>
+
+      <ul>
+      <% @conta.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :correntista_id %><br>
+    <%= f.text_field :correntista_id,:readonly => true %>
+  </div>
+  <div class="field">
+    <%= f.label :flag_ativo %><br>
+    <%= f.text_field :flag_ativo, :readonly => true %>
+  </div>
+
+  <div class="field">
+    <%= f.hidden_field :updated_at %>
+  </div>
+  <div class="field">
+    <%= f.label :saldo %><br>
+    <%= f.text_field :saldoProvisorio, id: :valorField , maxlength: 18 %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+  <div class="field">
+    <%#= f.label :created_at %><br>
+    <%#= f.label DateTime.current.to_formatted_s(:rfc822), :readonly => true %>
+  </div>
+<% end %>

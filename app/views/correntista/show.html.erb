@@ -1,0 +1,68 @@
+<h2>Home:</h2>
+    <p id="notice"><%= notice %></p>
+<div class="row">
+  <div class="col-md-6 col-sm-12 col-xs-12">
+    <div class="panel panel-back noti-box">
+
+      <h2>Visualizar Cadastro de correntista:</h2>
+
+      <p>
+        <strong>Correntista:</strong>
+        <%= @correntista.id %>
+      </p>
+
+      <p>
+        <strong>Cpf:</strong>
+        <%= @correntista.cpf %>
+      </p>
+
+      <p>
+        <strong>Nome:</strong>
+        <%= @correntista.nome %>
+      </p>
+
+      <p>
+        <strong>Datanascimento:</strong>
+        <%= @correntista.datanascimento.strftime("%d/%m/%Y") %>
+      </p>
+
+      <p>
+        <strong>Endereco:</strong>
+        <%= @correntista.endereco %>
+      </p>
+
+      <p>
+        <strong>Numero:</strong>
+        <%= @correntista.numero %>
+      </p>
+
+      <p>
+        <strong>Bairro:</strong>
+        <%= @correntista.bairro %>
+      </p>
+
+      <p>
+        <strong>Cidade:</strong>
+        <%= @correntista.cidade %>
+      </p>
+
+      <p>
+        <strong>Estado:</strong>
+        <%= @correntista.estado %>
+      </p>
+      <p>
+        <strong>Quantidade de Contas:</strong>
+        <%= @correntista.contas.qtdAtiva %>
+      </p>
+    </div>
+  </div>
+
+  <div class="col-md-6 col-sm-12 col-xs-12">
+    <div class="panel panel-back noti-box">
+      <h3>Ações para seu Cadastro:</h3>
+      <%= link_to edit_correntista_path(@correntista), class:"btn btn-primary" do %><i class="fa fa-pencil"></i> Editar Cadastro <% end %>
+      <%= link_to correntista_conta_index_path(current_user), class:"btn btn-success" do %><i class="fa fa-desktop"></i> Visualizar Contas <% end %>
+      <%= link_to new_correntista_conta_path(:correntista_id => @correntista.id), class:"btn btn-warning" do %><i class="fa fa-plus-square-o"></i> Criar Nova Conta <% end %>
+    <%#= link_to 'Criar Conta', new_correntista_conta_path(:correntista_id => @correntista.id) %>
+  </div>
+</div>

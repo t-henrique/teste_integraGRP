@@ -1,0 +1,29 @@
+<%= form_for([:conta, @deposito]) do |f| %>
+  <% if @deposito.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@deposito.errors.count, "error") %> prohibited this deposito from being saved:</h2>
+
+      <ul>
+      <% @deposito.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :valor %><br>
+    <%= f.text_field :valorProvisorio, maxlength: 18 %>
+  </div>
+  <div class="field">
+    <%= f.label :conta_origem_id %><br>
+    <%= f.text_field :conta_origem_id, :readonly => true %>
+  </div>
+  <div class="field">
+    <%= f.label :conta_destino_id %><br>
+    <%= f.select :conta_destino_id, @deposito.carregaContasAivas(params[:conta_id]) %>
+  </div>
+  <div class="actions">
+    <%= f.submit 'Transferir', :name => :transfer, data: { confirm: 'Está certo dos valores?' } %>
+  </div>
+<% end %>

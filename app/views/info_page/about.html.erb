@@ -1,0 +1,106 @@
+<%= link_to correntista_path(current_user.correntista_id), class:"btn btn-default" do  %><i class="fa fa-step-backward "></i> Voltar <% end %>
+<h1>Página sobre o desenvolvimento do Projeto</h1>
+<div class="row">
+  <div class="col-md-4 col-sm-12 col-xs-12 customHW">
+    <img src="/img/eu.jpg" class="img-responsive center-block ">
+  </div>
+  <div class="col-md-8  col-sm-12 col-xs-12">
+    <div class="panel panel-back noti-box">
+      <h3>Dados sobre o desenvolvedor:</h3>
+      <div class="middle">
+        <ul>
+          <li>Nome: Thiago H. Pereira </li>
+          <li>Site Pessoal: <a href="http://www.thiagohenriqueti.hol.es" target="_blank"> thiagohenriqueti.hol.es</a>  </li>
+          <li>LinkedIn: <a href="http://br.linkedin.com/in/thenriquepereira" target="_blank"> linkedin/thiagohpereira</a>  </li>
+          <li>GMail: thiagohenrique.ti@gmail.com  </li>
+          <li>Outlook & Skype: thiagohenrique.ti@outlook.com  </li>
+
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6 col-sm-12 col-xs-12">
+    <div class="panel panel-back noti-box">
+      <h2> Desafio proposto pela Integra GRP:</h2>
+      <div>
+        <span><p><strong>Requisitos Funcionais:</strong></p></span>
+        <ul>
+          <li> Cadastrar, Editar e Encerrar sua Conta</li>
+          <li> Realizar depósitos </li>
+          <li> Realizar saques </li>
+          <li> Realizar transferências entre contas </li>
+          <li> Solicitar saldo </li>
+          <li> Solicitar extrato filtrando por data início e final </li>
+        </ul>
+      </div>
+      <div>
+        <span><p><strong>Regras de Domínio da Aplicação:</strong></p></span>
+        <p> Regras: </p>
+        <ul>
+          <li>Uma conta não pode ser excluída</li>
+          <li>Para realizar saques e transferências é necessário autenticar o usuário</li>
+          <li>O saldo de uma conta nunca pode ficar negativo</li>
+        </ul>
+        <p> Taxas de Transferência: </p>
+        <ul>
+          <li>De segunda a sexta das 9 às 18 horas a taxa é 5 reais por transferência</li>
+          <li>Fora desse horário a taxa é 7 reais</li>
+          <li>Acima de 1000 reais há um adicional de 10 reais na taxa</li>
+        </ul>
+      </div>
+
+      <div>
+        <span><p><strong>Exigência do Recrutador:</strong></p></span>
+        <ul>
+          <li>Fazer testes unitários e de aceitação. Rspec, TestUnit, ou o que preferir. </li>
+          <li>Versionar o código com Git </li>
+          <li>Hospedar a aplicação no Heroku </li>
+          <li>Enviar o código por email em um arquivo zip (contendo os arquivos de versionamento do git) </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+  <div class="col-md-6 col-sm-12 col-xs-12">
+    <div class="panel panel-back noti-box">
+      <h2> Solução proposta:</h2>
+      <div>
+        <span><p><strong>Requisitos Funcionais:</strong></p></span>
+        <ul class="noDot">
+          <li><i class="fa fa-check"></i> É possível criar mais de uma conta conta</li>
+          <li><i class="fa fa-check"></i> É possível ao usuário cadastrar, editar e encerrar sua conta</li>
+          <li><i class="fa fa-check"></i> O usuário pode realizar depósitos e saques em sua conta </li>
+          <li><i class="fa fa-check"></i> O usuário pode realizar transferências entre suas contas ou de terceiros </li>
+          <li><i class="fa fa-check"></i> Solicitar saldo </li>
+          <li><i class="fa fa-times"></i> Solicitar extrato filtrando por data início e final </li>
+        </ul>
+      </div>
+      <div>
+        <span><p><strong>Regras de Domínio da Aplicação:</strong></p></span>
+        <p> Regras: </p>
+        <ul class="noDot">
+          <li><i class="fa fa-check"></i>O usuário só pode desativar uma conta após o saldo dela for igual a zero (0)</li>
+          <li><i class="fa fa-check"></i>Utilizado a Gem Devise para gestão de usuários e autenticação.</li>
+          <li><i class="fa fa-check"></i>Criado restrições para não permitir que o saldo fique negativo</li>
+        </ul>
+        <p> Taxas de Transferência: </p>
+        <ul class="noDot">
+          <li><i class="fa fa-check"></i>Implementação de classe para gestão das taxas de acordo com o horário que transferência é criada.</li>
+        </ul>
+      </div>
+
+      <div>
+        <span><p><strong>Exigência para o Teste:</strong></p></span>
+        <ul class="noDot">
+          <li><i class="fa fa-times"></i> Testes ainda não desenvolvidos </li>
+          <li><i class="fa fa-check"></i> Código versionado no Git apenas na versão final. Todo o processo de desenvolvimento foi versionado localmente.</li>
+          <li><i class="fa fa-check"></i>Hospedado no Heroku em 24/01/2016 </li>
+          <li><i class="fa fa-check"></i>Código enviado no dia 25/01/2016 </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</div>

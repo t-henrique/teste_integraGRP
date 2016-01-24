@@ -1,0 +1,159 @@
+<%= link_to conta_path(@conta), class:"btn btn-default" do  %><i class="fa fa-step-backward "></i> Voltar <% end %>
+<p id="notice"><%= notice %></p>
+<div class="row">
+  <div class="col-md-12">
+    <h2>Extrato</h2>
+    <span class="col-md-4">
+      <strong>Conta:</strong>
+      <%= @conta.id %>
+    </span>
+    <span class="col-md-4">
+      <strong class="green">Saldo:</strong>
+      R$ <%= @conta.saldo %>
+    </span>
+    <span class="col-md-4">
+      Data: <strong><%= Date.today %> </strong>
+    </span>
+  </div>
+</div>
+<hr>
+
+<div class="row">
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3>Saques</h3>
+      </div>
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Data e Horário</th>
+                <th>Valor</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @conta.extratoSaque.each do |extrato| %>
+              <tr class="danger">
+                <td></td>
+                <td><%= extrato.created_at.strftime("%m/%d/%Y - %H:%M:%S") %></td>
+                <td>R$ - <%= extrato.valor %></td>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3>Depósitos</h3>
+      </div>
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Data e Horário</th>
+                <th>Valor</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @conta.extratoDeposito.each do |extrato| %>
+              <tr class="success">
+                <td></td>
+                <td><%= extrato.created_at.strftime("%m/%d/%Y - %H:%M:%S") %></td>
+                <td>R$ + <%= extrato.valor %></td>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr>
+
+<div class="row">
+  <div class="col-md-12">
+    <!--    Context Classes  -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3>Tansferências Recebidas</h3>
+      </div>
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>De (Conta Origem)</th>
+                <th>Para (Conta Destino)</th>
+                <th>Data e Horário</th>
+                <th>Valor</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @conta.extratoTransferenciaRecebidas.each do |extrato| %>
+              <tr class="info">
+                <td><%= extrato.conta_origem_id %></td>
+                <td><%= extrato.conta_destino_id %></td>
+                <td><%= extrato.created_at.strftime("%m/%d/%Y - %H:%M:%S") %></td>
+                <td>R$ + <%= extrato.valor %></td>
+                <!-- <td>R$ <%= extrato.taxa %></td> -->
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!--  end  Context Classes  -->
+  </div>
+</div>
+<!-- End  Hover Rows  -->
+<hr>
+<div class="row">
+  <div class="col-md-12">
+    <!--    Context Classes  -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3>Tansferências Realizadas</h3>
+      </div>
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>De (Conta Origem)</th>
+                <th>Para (Conta Destino)</th>
+                <th>Data e Horário</th>
+                <th>Valor</th>
+                <th>Taxa</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% @conta.extratoTransferenciaOriginadas.each do |extrato| %>
+              <tr class="warning">
+                <td><%= extrato.conta_origem_id %></td>
+                <td><%= extrato.conta_destino_id %></td>
+                <td><%= extrato.created_at.strftime("%m/%d/%Y - %H:%M:%S") %></td>
+                <td>R$ - <%= extrato.valor %></td>
+                <td>R$ - <%= extrato.taxa %></td>
+              </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!--  end  Context Classes  -->
+  </div>
+</div>
+<hr>

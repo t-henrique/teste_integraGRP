@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Deposito</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Valor</th>
+      <th>Conta destino</th>
+      <th>Conta origem</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @deposito.each do |deposito| %>
+      <tr>
+        <td><%= deposito.id %></td>
+        <td><%= deposito.valor %></td>
+        <td><%= deposito.conta_destino_id %></td>
+        <td><%= deposito.conta_origem_id %></td>
+        <td><%= link_to 'Show', deposito %></td>
+        <td><%= link_to 'Edit', edit_deposito_path(deposito) %></td>
+        <td><%= link_to 'Destroy', deposito, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Deposito', new_deposito_path %>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>DesafioIntegragrp</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+</head>
+<body>
+  <div id="wrapper">
+    <!-- menu superior -->
+    <nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <% if user_signed_in? %>
+        <%= link_to "IntegraGRP", correntista_path(current_user.correntista_id), class:"navbar-brand" %>
+
+        <% else %>
+          <%= link_to "IntegraGRP", root_path, class:"navbar-brand" %>
+        <% end %>
+      </div>
+      <div class ="divLoginLogout">
+        <% if user_signed_in? %>
+        Bem vindo: <%= current_user.email %>
+        <%= link_to "Sair", destroy_user_session_path, :method => :delete , class: "btn btn-danger square-btn-adjust"%>
+        <% else %>
+        <span>
+          <%= link_to "Cadastrar", new_user_registration_path, class: "btn btn-primary" %>
+        </span>
+        <%= link_to "Entrar", new_user_session_path, class: "btn btn-success"  %>
+        <% end %>
+
+      </div>
+    </nav>
+
+    <nav class="navbar-default navbar-side" role="navigation">
+      <div class="sidebar-collapse">
+        <% if (user_signed_in? && !current_user.correntista_id.nil? ) %>
+
+        <ul class="nav" id="main-menu">
+          <li class="text-center">
+            <img src="/img/find_user.png" class="user-image img-responsive">
+          </li>
+          <li>
+            <%= link_to correntista_path(current_user)do %><i class="fa fa-dashboard fa-3x"></i> Home <% end %>
+          </li>
+          <li>
+            <%= link_to new_correntista_conta_path(:correntista_id => current_user.correntista_id) do %><i class="fa fa-plus fa-3x"></i>'Criar Conta' <% end %>
+          </li>
+          <li>
+            <%= link_to correntista_conta_index_path(current_user) do %><i class="fa fa-desktop fa-3x"></i>Visualizar Todas as Contas <% end %>
+          </li>
+          <li>
+            <a ><i class="fa fa-sitemap fa-3x"></i> Vizualizar Contas Individualmente<span class="fa arrow"></span></a>
+            <ul class="nav nav-second-level dspCustom">
+              <% User.find(current_user.id).correntista.contas.ativa.each do |conta| %>
+              <li>
+                <%= link_to conta.id, conta %>
+              </li>
+              <% end %>
+            </ul>
+          </li>
+          <li>
+            <%= link_to info_page_about_path do %><i class="fa fa-info fa-3x"></i> Sobre <% end %>
+          </li>
+          <li>
+            <%= link_to destroy_user_session_path, :method => :delete do %><i class="fa fa-sign-out fa-3x"></i> Sair <% end %>
+          </li>
+
+        </ul>
+        <% else %>
+        <span>
+          <ul class="nav" id="main-menu">
+            <li><%= link_to new_user_registration_path do %><i class="fa fa-user fa-3x"></i> Cadastrar <% end %> </li>
+          </ul>
+        </span>
+        <% end %>
+      </div>
+
+    </nav>
+    <div id="page-wrapper">
+      <div id="page-inner">
+        <div class="flash">
+          <% flash.each do |type, message| -%>
+          <div class="message <%= type %>">
+            <p><%#= message %></p>
+          </div>
+          <% end -%>
+        </div>
+        <%= yield %>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Saque</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Valor</th>
+      <th>Created at</th>
+      <th>Time</th>
+      <th>Conta</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @saque.each do |saque| %>
+      <tr>
+        <td><%= saque.valor %></td>
+        <td><%= saque.created_at.strftime("%m/%d/%Y - %H:%M") %></td>
+        <td><%= saque.time %></td>
+        <td><%= saque.conta_id %></td>
+        <td><%= link_to 'Show', saque %></td>
+        <td><%= link_to 'Edit', edit_saque_path(saque) %></td>
+        <td><%= link_to 'Destroy', saque, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Saque', new_saque_path %>

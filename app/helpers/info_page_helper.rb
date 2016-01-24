@@ -1,0 +1,2 @@
+module InfoPageHelper
+end

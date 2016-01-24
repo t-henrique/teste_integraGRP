@@ -1,0 +1,31 @@
+<h2>Comprovante de Depósito</h2>
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Idenfiticador:</strong>
+  <%= @deposito.id %>
+</p>
+
+<p>
+  <strong>Valor:</strong>
+  <%= @deposito.valor %>
+</p>
+
+<p>
+  <strong>Data de criação:</strong>
+  <%= @deposito.created_at.strftime("%m/%d/%Y - %H:%M:%S") %>
+</p>
+
+<p>
+  <strong>Conta destino:</strong>
+  <%= @deposito.conta_destino_id %>
+</p>
+
+<p>
+  <strong>Conta origem:</strong>
+  <%= @deposito.conta_origem_id %>
+</p>
+<%= link_to conta_index_path, class:"btn btn-default" do  %><i class="fa fa-step-backward "></i> Voltar <% end %>
+
+<%#= link_to 'Edit', edit_deposito_path(@deposito) %> 
+<%#= link_to 'Back', deposito_index_path %>

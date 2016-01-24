@@ -1,0 +1,23 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id: 1
+  cpf: MyString
+  nome: MyString
+  datanascimento: 2015-12-22 13:52:50
+  endereco: MyString
+  numero: 1
+  bairro: MyString
+  cidade: MyString
+  estado: MyString
+
+two:
+  id: 1
+  cpf: MyString
+  nome: MyString
+  datanascimento: 2015-12-22 13:52:50
+  endereco: MyString
+  numero: 1
+  bairro: MyString
+  cidade: MyString
+  estado: MyString

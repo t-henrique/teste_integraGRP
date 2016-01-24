@@ -1,0 +1,3 @@
+class Extrato
+
+end

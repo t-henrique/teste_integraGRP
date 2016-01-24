@@ -1,0 +1,125 @@
+<%= link_to conta_index_path, class:"btn btn-default" do  %><i class="fa fa-step-backward "></i> Voltar <% end %>
+
+<div class="row">
+  <div class="col-md-6 col-sm-12 col-xs-12">
+    <div class="panel panel-back noti-box">
+      <p id="notice"><%= notice %></p>
+      <div class="text-box">
+        <span class="icon-box bg-color-blue">
+          <i class="fa fa-warning"></i>
+        </span>
+        <p class="main-text">Detalhes da Conta: <%= @conta.id  %></p>
+        <hr>
+      </div>
+      <div class="text-box">
+
+        <p class="text-muted">
+          <span class="text-muted color-bottom-txt">
+            <p>
+              <strong>Id:</strong>
+              <%= @conta.id %>
+            </p>
+          </span>
+          <span class="text-muted color-bottom-txt">
+            <p>
+              <strong>Correntista:</strong>
+              <%= @conta.correntista_id %>
+            </p>
+          </span>
+          <span class="text-muted color-bottom-txt">
+
+            <p>
+              <strong>Flag ativo:</strong>
+              <%= @conta.flag_ativo %>
+            </p>
+          </span>
+          <span class="text-muted color-bottom-txt">
+
+            <p>
+              <strong>Data de Criação:</strong>
+              <%= @conta.created_at.strftime("%m/%d/%Y - %H:%M") %>
+            </p>
+          </span>
+          <span class="text-muted color-bottom-txt">
+
+            <p>
+              <strong>Última atualização:</strong>
+              <%= @conta.updated_at.strftime("%m/%d/%Y - %H:%M:%S") %>
+            </p>
+          </span>
+          <span class="text-muted color-bottom-txt">
+
+            <p>
+              <strong>Saldo:</strong>
+              <td><%= number_to_currency(@conta.saldo,:format => "%u %n", :separator => ",", :delimiter => ".", :unit => "R$") %></td>
+
+              <%#= @conta.saldo %>
+            </p>
+          </span>
+        </p>
+
+        <ul>
+          <h3>Última movimentação:</h3>
+          <% @conta.extratoSaque.first do |saque| %>
+          <li> <%= saque.id  %>   </li>
+          <li> <%= saque.valor  %>  </li>
+          <li> <%= saque.created_at.strftime("%d/%m/%Y")  %>  </li>
+          <%end%>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col-md-6 col-sm-12 col-xs-12">
+    <div class="panel panel-back noti-box ">
+      <span class="icon-box bg-color-red set-icon">
+        <i class="fa fa-money fa-arrow-up"></i>
+      </span>
+      <div class="text-box">
+        <% if @conta.saldo == 0 %>
+        <fieldset disabled="disabled">
+          <%= link_to 'Sacar', new_conta_saque_path(@conta), class:"btn btn-primary" %>
+          <p class="text-muted">Lamentamos mas seu saldo é de R$ 0,00 e por isto esta função não está disponível!</p>
+        </fieldset>
+        <%else%>
+        <%= link_to 'Sacar', new_conta_saque_path(@conta), class:"btn btn-primary" %>
+        <p class="text-muted">Saque a hora que quiser, sem taxas, sem juros, saque na hora!</p>
+        <%end%>
+
+      </div>
+    </div>
+  </div>
+  <div class="col-md-6 col-sm-12 col-xs-12">
+    <div class="panel panel-back noti-box">
+      <span class="icon-box bg-color-red set-icon">
+        <i class="fa fa-envelope-o"></i>
+      </span>
+      <div class="text-box">
+        <%= link_to 'Depositar', new_conta_deposito_path(@conta), class:"btn btn-success" %>
+        <p class="text-muted">Realize depósitos rápidos e seguros para sua conta.</p>
+      </div>
+    </div>
+  </div><div class="col-md-6 col-sm-12 col-xs-12">
+    <div class="panel panel-back noti-box">
+      <span class="icon-box bg-color-red set-icon">
+        <i class="fa fa-exchange"></i>
+      </span>
+      <div class="text-box">
+        <%= link_to 'Transferir', transfer_new_conta_deposito_path(@conta), class:"btn btn-warning" %>
+        <p class="text-muted">Faça transferências em dois cliques entre contas ou de terceiros.</p>
+        <sub class="text-muted">*Transferências sujeito a Taxas, verifique aqui.</sub>
+      </div>
+    </div>
+  </div><div class="col-md-6 col-sm-12 col-xs-12">
+    <div class="panel panel-back noti-box">
+      <span class="icon-box bg-color-red set-icon">
+        <i class="fa fa-info"></i>
+      </span>
+      <div class="text-box">
+        <%= link_to 'Extrato', conta_extrato_path(@conta), class:"btn btn-info" %>
+        <p class="text-muted">Verifique seu extrato completo ou filtrado por datas e tenha controle sobre seus ativos.</p>
+      </div>
+    </div>
+  </div>
+</div>

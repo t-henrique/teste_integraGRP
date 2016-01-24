@@ -1,0 +1,55 @@
+<%= form_for(@correntista) do |f| %>
+  <% if @correntista.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@correntista.errors.count, "error") %> prohibited this correntista from being saved:</h2>
+
+      <ul>
+      <% @correntista.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <!-- <%= f.label :id %><br> -->
+    <%= f.hidden_field :id %>
+  </div>
+  <div class="field">
+    <%= f.label :nome %><br>
+    <%= f.text_field :nome%>
+  </div>
+  <div class="field">
+    <%= f.label :cpf %><br>
+    <%= f.text_field :cpf , maxlength: 11, size: 20%>
+  </div>
+  <div class="field">
+    <%= f.label :datanascimento %><br>
+    <%= f.date_select :datanascimento, start_year: 1900 , end_year: 2005, order: [:day, :month, :year] %>
+
+  </div>
+  <div class="field">
+    <%= f.label :endereco %><br>
+    <%= f.text_field :endereco %>
+  </div>
+  <div class="field">
+    <%= f.label :numero %><br>
+    <%= f.number_field :numero %>
+  </div>
+  <div class="field">
+    <%= f.label :bairro %><br>
+    <%= f.text_field :bairro %>
+  </div>
+  <div class="field">
+    <%= f.label :cidade %><br>
+    <%= f.text_field :cidade %>
+  </div>
+  <div class="field">
+    <%= f.label :estado %><br>
+    <%#-- <%= f.text_field :estado, maxlength: 2, size: 20 %>
+    <%= f.select :estado, Correntista.carregaEstados.invert, {}, {:class => "form-control"} %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
