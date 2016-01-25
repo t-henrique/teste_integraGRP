@@ -26,7 +26,7 @@ class Deposito < ActiveRecord::Base
   # def carregaContasAivas(contaid)
   #   Conta.retornaContasAtivasSemContaOrigem(contaid)
   # end
-
+ 
   def transferir
     corrigeValor
     self.taxa = acrescentaTaxa

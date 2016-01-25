@@ -13,6 +13,7 @@ class Saque < ActiveRecord::Base
     self.valor = self.valorProvisorio.gsub(/,/){'.'}.to_d
   end
 
+
   def iniciaSaque
     corrigeValor
     conta = Conta.find(conta_id)
